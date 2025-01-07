@@ -1,6 +1,5 @@
 package com.viclourenco.ticketscanner
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,9 +9,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CenterFocusWeak
-import androidx.compose.material.icons.filled.CheckCircleOutline
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
+import androidx.compose.material.icons.outlined.Cancel
+import androidx.compose.material.icons.outlined.CheckCircle
+import androidx.compose.material.icons.outlined.Circle
+import androidx.compose.material.icons.outlined.ErrorOutline
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -24,36 +26,19 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-
-object purchase {
-    val ticket_code = "01jgepy60fyjga56nr8bd5w61g"
-    val purchased_at = "2024-09-04 18:55:08"
-    val checked_in_at = "2024-09-05 14:30:15"
-    object ticket {
-        val type = "VIP"
-        object event {
-            val name = "Festival Camecípare"
-        }
-    }
-    object customer {
-        val name = "Luís Barros"
-        val email = "luis.barros@mail.com"
-        val phone_number = "+351967584930"
-    }
-}
 
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
     mainViewModel: MainViewModel = viewModel()
 ) {
+    val invalidTicket = mainViewModel.invalidTicket
+    val purchase = mainViewModel.purchase
     var expandedDetails by rememberSaveable { mutableStateOf(false) }
-
     Column(
         modifier = modifier.padding(32.dp)
     ) {
@@ -62,27 +47,60 @@ fun MainScreen(
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(
-                text = purchase.ticket.event.name,
+                text =
+                    if (purchase == null) {
+                        "Ticket Scanner"
+                    } else {
+                        purchase.ticket.event.name
+                    },
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(bottom = 24.dp)
             )
             Icon(
-                imageVector = Icons.Filled.CheckCircleOutline,
+                imageVector =
+                    if (purchase == null) {
+                        if (invalidTicket) {
+                            Icons.Outlined.ErrorOutline
+                        } else {
+                            Icons.Outlined.Circle
+                        }
+                    } else {
+                        if (purchase.checkedInAt == null) {
+                            Icons.Outlined.CheckCircle
+                        } else {
+                            Icons.Outlined.Cancel
+                        }
+                    },
                 contentDescription = "Icon",
                 modifier = Modifier.size(160.dp)
             )
             Text(
-                text = "Valid Ticket",
+                text =
+                    if (purchase == null) {
+                        if (invalidTicket) {
+                            "Invalid Ticket"
+                        } else {
+                            "Ready to Scan"
+                        }
+                    } else {
+                        if (purchase.checkedInAt == null) {
+                            "Valid Ticket"
+                        } else {
+                            "Already Scanned"
+                        }
+                    },
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(bottom = 32.dp)
             )
-            Text(
-                text = purchase.customer.name,
-                fontSize = 20.sp,
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
+            if (purchase != null) {
+                Text(
+                    text = purchase.customer.name,
+                    fontSize = 20.sp,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
+            }
         }
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -90,38 +108,39 @@ fun MainScreen(
                 .fillMaxWidth()
                 .weight(1f)
         ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(
-                    text = "Details",
-                    fontSize = 20.sp
-                )
-                IconButton(onClick = {expandedDetails = !expandedDetails}) {
-                    Icon(
-                        imageVector = if (expandedDetails) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
-                        contentDescription = "Icon"
+            if (purchase != null) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = "Details",
+                        fontSize = 20.sp
                     )
-                }
-            }
-            if (expandedDetails) {
-                Column {
-                    Column(modifier = Modifier.padding(bottom = 16.dp)) {
-                        Text(
-                            text = "Customer",
-                            fontSize = 18.sp
+                    IconButton(onClick = {expandedDetails = !expandedDetails}) {
+                        Icon(
+                            imageVector = if (expandedDetails) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
+                            contentDescription = "Icon"
                         )
-                        Text("Name: ${purchase.customer.name}")
-                        Text("Email: ${purchase.customer.email}")
-                        Text("Phone number: ${purchase.customer.phone_number}")
                     }
+                }
+                if (expandedDetails) {
                     Column {
                         Text(
                             text = "Ticket",
                             fontSize = 18.sp
                         )
                         Text("Type: ${purchase.ticket.type}")
-                        Text("Code: ${purchase.ticket_code}")
-                        Text("Purchased at: ${purchase.purchased_at}")
-                        Text("Checked-in at: ${purchase.checked_in_at}")
+                        Text("Code: ${purchase.ticketCode}")
+                        Text("Purchased at: ${purchase.purchasedAt}")
+                        if (purchase.checkedInAt != null) {
+                            Text("Checked-in at: ${purchase.checkedInAt}")
+                        }
+                        Text(
+                            text = "Customer",
+                            fontSize = 18.sp,
+                            modifier = Modifier.padding(top = 16.dp)
+                        )
+                        Text("Name: ${purchase.customer.name}")
+                        Text("Email: ${purchase.customer.email}")
+                        Text("Phone number: ${purchase.customer.phoneNumber}")
                     }
                 }
             }
@@ -132,7 +151,10 @@ fun MainScreen(
                 .fillMaxWidth()
                 .padding(bottom = 32.dp)
         ) {
-            Button(onClick = {}) {
+            Button(
+                enabled = purchase != null && purchase.checkedInAt == null,
+                onClick = {}
+            ) {
                 Text(
                     text = "Check-in",
                     fontSize = 24.sp
