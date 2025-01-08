@@ -16,7 +16,7 @@ class MainViewModel : ViewModel() {
     var purchase: Purchase? by mutableStateOf(null)
 
     private fun isValidUlid(input: String): Boolean {
-        val ulidRegex = "^[0-7a-z]{26}$".toRegex()
+        val ulidRegex = "^[0-7A-Z]{26}$".toRegex()
         return ulidRegex.matches(input)
     }
 
