@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">Ticket Scanner</string>
+    <string name="ticket_none">Ready to Scan</string>
+    <string name="ticket_valid">Valid Ticket</string>
+    <string name="ticket_invalid">Invalid Ticket</string>
+    <string name="ticket_scanned">Already Scanned</string>
+    <string name="details">Details</string>
+    <string name="ticket">Ticket</string>
+    <string name="ticket_type">Type</string>
+    <string name="ticket_code">Code</string>
+    <string name="ticket_purchased_at">Purchased at</string>
+    <string name="ticket_checked_in_at">Checked-in at</string>
+    <string name="customer">Customer</string>
+    <string name="customer_name">Name</string>
+    <string name="customer_email">Email</string>
+    <string name="customer_phone">Phone</string>
+    <string name="button_check_in">Check-in</string>
 </resources>
