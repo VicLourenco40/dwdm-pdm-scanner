@@ -165,7 +165,7 @@ fun MainScreen(
                         .addOnSuccessListener { barcode ->
                             val ticketCode = barcode.rawValue
                             if (ticketCode != null) {
-                                mainViewModel.getTicketPurchase(ticketCode.uppercase())
+                                mainViewModel.getTicketPurchase(ticketCode.lowercase())
                             }
                         }
                 },
