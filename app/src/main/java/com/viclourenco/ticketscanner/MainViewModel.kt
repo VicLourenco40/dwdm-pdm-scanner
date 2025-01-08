@@ -23,6 +23,7 @@ class MainViewModel : ViewModel() {
     fun getTicketPurchase(ticketCode: String) {
         if (!isValidUlid(ticketCode)) {
             invalidTicket = true
+            purchase = null
             return
         }
         viewModelScope.launch {
