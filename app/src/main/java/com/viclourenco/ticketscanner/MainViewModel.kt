@@ -25,9 +25,22 @@ class MainViewModel : ViewModel() {
                 val purchaseResponse = TicketsApi.retrofitService.getPurchase(ticketCode)
                 purchase = purchaseResponse.purchase
                 invalidTicket = false
-            } catch(error: HttpException) {
+            } catch (error: HttpException) {
                 purchase = null
                 invalidTicket = true
+            } catch (error: IOException) {
+                //
+            }
+        }
+    }
+
+    fun getTicketCheckIn(ticketCode: String) {
+        viewModelScope.launch {
+            try {
+                val checkInResponse = TicketsApi.retrofitService.checkIn(ticketCode)
+                purchase = null
+            } catch (error: HttpException) {
+                //
             } catch (error: IOException) {
                 //
             }

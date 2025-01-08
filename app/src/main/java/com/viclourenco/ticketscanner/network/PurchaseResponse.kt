@@ -4,5 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class PurchaseResponse (
-    val purchase: Purchase
+    val purchase: Purchase,
+    val error: String? = null
 )

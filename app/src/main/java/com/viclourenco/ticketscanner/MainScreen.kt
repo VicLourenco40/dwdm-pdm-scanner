@@ -153,7 +153,7 @@ fun MainScreen(
         ) {
             Button(
                 enabled = purchase != null && purchase.checkedInAt == null,
-                onClick = {}
+                onClick = {mainViewModel.getTicketCheckIn("01jgepy60fxhghnaxz3z0v11qq")}
             ) {
                 Text(
                     text = "Check-in",

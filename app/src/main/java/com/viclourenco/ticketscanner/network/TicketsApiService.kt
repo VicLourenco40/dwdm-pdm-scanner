@@ -21,6 +21,9 @@ private val retrofit = Retrofit.Builder()
 interface TicketsApiService {
     @GET("tickets/{ticketCode}")
     suspend fun getPurchase(@Path("ticketCode") ticketCode: String): PurchaseResponse
+
+    @GET("tickets/{ticketCode}/check-in")
+    suspend fun checkIn(@Path("ticketCode") ticketCode: String): CheckInResponse
 }
 
 object TicketsApi {
