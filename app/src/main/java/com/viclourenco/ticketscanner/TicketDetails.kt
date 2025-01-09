@@ -9,7 +9,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -33,7 +35,13 @@ fun TicketDetails(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier.fillMaxWidth().animateContentSize()
     ) {
-        Button(onClick = {expandedDetails = !expandedDetails}) {
+        Button(
+            onClick = {expandedDetails = !expandedDetails},
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.background,
+                contentColor = MaterialTheme.colorScheme.onBackground
+            )
+        ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     text = stringResource(R.string.details),
@@ -50,23 +58,46 @@ fun TicketDetails(
         if (expandedDetails) {
             Column {
                 Text(
-                    text = stringResource(R.string.ticket),
-                    fontSize = 18.sp
+                    stringResource(R.string.ticket),
+                    fontSize = 18.sp,
+                    color = MaterialTheme.colorScheme.onPrimary
                 )
-                Text("${stringResource(R.string.ticket_type)}: ${purchase.ticket.type}")
-                Text("${stringResource(R.string.ticket_code)}: ${purchase.ticketCode}")
-                Text("${stringResource(R.string.ticket_purchased_at)}: ${purchase.purchasedAt}")
+                Text(
+                    "${stringResource(R.string.ticket_type)}: ${purchase.ticket.type}",
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
+                Text(
+                    "${stringResource(R.string.ticket_code)}: ${purchase.ticketCode}",
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
+                Text(
+                    "${stringResource(R.string.ticket_purchased_at)}: ${purchase.purchasedAt}",
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
                 if (purchase.checkedInAt != null) {
-                    Text("${stringResource(R.string.ticket_checked_in_at)}: ${purchase.checkedInAt}")
+                    Text(
+                        "${stringResource(R.string.ticket_checked_in_at)}: ${purchase.checkedInAt}",
+                        color = MaterialTheme.colorScheme.onPrimary
+                    )
                 }
                 Text(
-                    text = stringResource(R.string.customer),
+                    stringResource(R.string.customer),
                     fontSize = 18.sp,
+                    color = MaterialTheme.colorScheme.onPrimary,
                     modifier = Modifier.padding(top = 16.dp)
                 )
-                Text("${stringResource(R.string.customer_name)}: ${purchase.customer.name}")
-                Text("${stringResource(R.string.customer_email)}: ${purchase.customer.email}")
-                Text("${stringResource(R.string.customer_phone)}: ${purchase.customer.phoneNumber}")
+                Text(
+                    "${stringResource(R.string.customer_name)}: ${purchase.customer.name}",
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
+                Text(
+                    "${stringResource(R.string.customer_email)}: ${purchase.customer.email}",
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
+                Text(
+                    "${stringResource(R.string.customer_phone)}: ${purchase.customer.phoneNumber}",
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
             }
         }
     }

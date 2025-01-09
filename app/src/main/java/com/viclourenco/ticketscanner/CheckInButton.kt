@@ -1,6 +1,8 @@
 package com.viclourenco.ticketscanner
 
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -21,6 +23,10 @@ fun CheckInButton(
                 mainViewModel.getTicketCheckIn(purchase.ticketCode)
             }
         },
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.background,
+            contentColor = MaterialTheme.colorScheme.onBackground
+        ),
         modifier = modifier
     ) {
         Text(

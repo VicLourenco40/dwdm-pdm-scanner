@@ -2,6 +2,7 @@ package com.viclourenco.ticketscanner
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,6 +19,9 @@ fun TicketStatus(
     purchase: Purchase?,
     modifier: Modifier = Modifier
 ) {
+    val contentColor =
+        if (purchase == null && !invalidTicket) MaterialTheme.colorScheme.onBackground
+        else MaterialTheme.colorScheme.onPrimary
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
@@ -28,13 +32,15 @@ fun TicketStatus(
                 else purchase.ticket.event.name,
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
+            color = contentColor,
             modifier = Modifier.padding(bottom = 24.dp)
         )
-        Status(invalidTicket, purchase, Modifier.padding(bottom = 32.dp))
+        Status(invalidTicket, purchase, contentColor, Modifier.padding(bottom = 32.dp))
         if (purchase != null) {
             Text(
                 text = purchase.customer.name,
-                fontSize = 20.sp
+                fontSize = 20.sp,
+                color = contentColor
             )
         }
     }
