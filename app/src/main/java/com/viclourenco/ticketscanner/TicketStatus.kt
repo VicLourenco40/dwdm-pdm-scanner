@@ -33,9 +33,9 @@ fun TicketStatus(
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             color = contentColor,
-            modifier = Modifier.padding(bottom = 24.dp)
+            modifier = Modifier.padding(bottom = 8.dp)
         )
-        Status(invalidTicket, purchase, contentColor, Modifier.padding(bottom = 32.dp))
+        Status(invalidTicket, purchase, contentColor, Modifier.padding(bottom = 16.dp))
         if (purchase != null) {
             Text(
                 text = purchase.customer.name,

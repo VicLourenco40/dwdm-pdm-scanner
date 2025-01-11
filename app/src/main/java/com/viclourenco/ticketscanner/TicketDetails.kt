@@ -33,7 +33,7 @@ fun TicketDetails(
     var expandedDetails by rememberSaveable { mutableStateOf(false) }
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier.fillMaxWidth().animateContentSize()
+        modifier = modifier.fillMaxWidth()
     ) {
         Button(
             onClick = {expandedDetails = !expandedDetails},

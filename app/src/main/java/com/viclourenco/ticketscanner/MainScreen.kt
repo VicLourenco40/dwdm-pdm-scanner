@@ -33,14 +33,14 @@ fun MainScreen(
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(32.dp).fillMaxWidth()
+            modifier = Modifier.padding(vertical = 24.dp).fillMaxWidth()
         ) {
             TicketStatus(invalidTicket, purchase, Modifier.padding(bottom = 16.dp))
             if (purchase != null) {
                 TicketDetails(purchase)
             }
             Spacer(Modifier.weight(1f))
-            CheckInButton(purchase, mainViewModel, Modifier.padding(bottom = 32.dp))
+            CheckInButton(purchase, mainViewModel, Modifier.padding(bottom = 16.dp))
             ScannerButton(scanner, mainViewModel)
         }
     }

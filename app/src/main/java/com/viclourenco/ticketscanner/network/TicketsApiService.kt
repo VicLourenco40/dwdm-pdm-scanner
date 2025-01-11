@@ -7,7 +7,8 @@ import retrofit2.Retrofit
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-private const val BASE_URL = "http://10.0.2.2:8000/api/"
+//private const val BASE_URL = "http://10.0.2.2:8000/api/"
+private const val BASE_URL = "https://king-prawn-app-npeuy.ondigitalocean.app/api/"
 
 private val json = Json {
     ignoreUnknownKeys = true

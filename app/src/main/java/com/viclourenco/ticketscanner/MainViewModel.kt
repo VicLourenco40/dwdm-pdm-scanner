@@ -16,14 +16,14 @@ class MainViewModel : ViewModel() {
     var purchase: Purchase? by mutableStateOf(null)
 
     private fun isValidUlid(input: String): Boolean {
-        val ulidRegex = "^[0-7a-z]{26}$".toRegex()
+        val ulidRegex = "^[0-7][0-9a-hjkmnp-tv-z]{25}$".toRegex()
         return ulidRegex.matches(input)
     }
 
     fun getTicketPurchase(ticketCode: String) {
         if (!isValidUlid(ticketCode)) {
-            invalidTicket = true
             purchase = null
+            invalidTicket = true
             return
         }
         viewModelScope.launch {
@@ -45,6 +45,7 @@ class MainViewModel : ViewModel() {
             try {
                 TicketsApi.retrofitService.checkIn(ticketCode)
                 purchase = null
+                invalidTicket = false
             } catch (error: HttpException) {
                 //
             } catch (error: IOException) {
