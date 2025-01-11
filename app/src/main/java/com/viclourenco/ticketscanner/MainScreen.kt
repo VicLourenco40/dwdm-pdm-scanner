@@ -40,7 +40,7 @@ fun MainScreen(
                 TicketDetails(purchase)
             }
             Spacer(Modifier.weight(1f))
-            CheckInButton(purchase, mainViewModel, Modifier.padding(bottom = 16.dp))
+            CheckInButton(purchase, mainViewModel, Modifier.padding(bottom = 24.dp))
             ScannerButton(scanner, mainViewModel)
         }
     }
